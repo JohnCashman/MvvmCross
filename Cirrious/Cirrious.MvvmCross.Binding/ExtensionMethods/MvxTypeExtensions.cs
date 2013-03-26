@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // MvxTypeExtensions.cs
 // (c) Copyright Cirrious Ltd. http://www.cirrious.com
 // MvvmCross is licensed using Microsoft Public License (Ms-PL)
@@ -5,6 +6,8 @@
 // 
 // Project Lead - Stuart Lodge, @slodge, me@slodge.com
 
+=======
+>>>>>>> upstream/master
 using System;
 using System.Globalization;
 
@@ -22,6 +25,7 @@ namespace Cirrious.MvvmCross.Binding.ExtensionMethods
                     var underlyingType = Nullable.GetUnderlyingType(propertyType);
                     safeValue = Convert.ChangeType(value, underlyingType, CultureInfo.CurrentUICulture);
                 }
+<<<<<<< HEAD
                 else if (propertyType == typeof (string))
                 {
                     if (value != null)
@@ -29,6 +33,8 @@ namespace Cirrious.MvvmCross.Binding.ExtensionMethods
                         safeValue = value.ToString();
                     }
                 }
+=======
+>>>>>>> upstream/master
                 else
                 {
                     safeValue = Convert.ChangeType(value, propertyType, CultureInfo.CurrentUICulture);

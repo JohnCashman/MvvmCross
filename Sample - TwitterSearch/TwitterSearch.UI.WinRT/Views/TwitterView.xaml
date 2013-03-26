@@ -13,7 +13,7 @@
 
     <Page.Resources>
         <Converters:VisibilityConverter x:Key="Visibility" />
-        <Converters:NativeHighQualityTwitterValueConverter x:Key="HighQualityTwitter" />
+        <Converters:HighQualityTwitterValueConverter x:Key="HighQualityTwitter" />
 
         <DataTemplate x:Key="NonStandard250x250ItemTemplate">
             <Grid HorizontalAlignment="Left" Width="250" Height="250">

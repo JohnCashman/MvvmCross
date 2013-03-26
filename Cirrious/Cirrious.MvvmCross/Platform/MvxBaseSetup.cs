@@ -64,7 +64,10 @@ namespace Cirrious.MvvmCross.Platform
             BaseTypeKeyword = "Base";
         }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
         public virtual void Initialize()
         {
             InitializePrimary();
@@ -197,6 +200,39 @@ namespace Cirrious.MvvmCross.Platform
         protected abstract IDictionary<Type, Type> GetViewModelViewLookup();
         protected abstract IMvxViewDispatcherProvider CreateViewDispatcherProvider();
 
+<<<<<<< HEAD
+=======
+#if NETFX_CORE
+        protected virtual IDictionary<Type, Type> GetViewModelViewLookup(Assembly assembly, Type expectedInterfaceType)
+        {
+            Func<string, bool> checkPreOrPostfix;
+            if (UsePrefixConventions) 
+            {
+                checkPreOrPostfix = (input) => input.StartsWith(BaseTypeKeyword);
+            }
+            else
+            {
+                checkPreOrPostfix = (input) => input.EndsWith(BaseTypeKeyword);
+            }
+
+            var views = from type in assembly.DefinedTypes
+                        where !type.IsAbstract
+                              && expectedInterfaceType.GetTypeInfo().IsAssignableFrom(type)
+                              && !checkPreOrPostfix(type.Name)
+                        let viewModelPropertyInfo = type.RecursiveGetDeclaredProperty("ViewModel")
+                        where viewModelPropertyInfo != null
+                        let viewModelType = viewModelPropertyInfo.PropertyType
+                        select new {type, viewModelType};
+
+            return views.ToDictionary(x => x.viewModelType, x => x.type.AsType());
+        }
+
+#warning Need to add unconventionalattributes to winrt code
+#warning Need to add better exception reporting to winrt code
+#warning Need to add abstract to winrt code
+
+#else
+>>>>>>> upstream/master
         protected virtual IDictionary<Type, Type> GetViewModelViewLookup(Assembly assembly, Type expectedInterfaceType)
         {
             var views = from type in assembly.GetTypes()
@@ -236,6 +272,7 @@ namespace Cirrious.MvvmCross.Platform
                 return null;
 
             if (candidateType.IsAbstract)
+<<<<<<< HEAD
                 return null;
 
             if (!expectedInterfaceType.IsAssignableFrom(candidateType))
@@ -246,6 +283,25 @@ namespace Cirrious.MvvmCross.Platform
 
             var unconventionalAttributes = candidateType.GetCustomAttributes(typeof (MvxUnconventionalViewAttribute),
                                                                              true);
+=======
+                return null;
+
+            if (!expectedInterfaceType.IsAssignableFrom(candidateType))
+                return null;
+
+            if (UsePrefixConventions)
+            {
+                if (candidateType.Name.StartsWith(BaseTypeKeyword))
+                    return null;
+            }
+            else
+            {
+                if (candidateType.Name.EndsWith(BaseTypeKeyword))
+                    return null;
+            }
+
+            var unconventionalAttributes = candidateType.GetCustomAttributes(typeof(MvxUnconventionalViewAttribute), true);
+>>>>>>> upstream/master
             if (unconventionalAttributes.Length > 0)
                 return null;
 

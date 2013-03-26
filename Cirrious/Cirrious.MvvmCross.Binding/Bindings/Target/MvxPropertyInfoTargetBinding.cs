@@ -77,7 +77,11 @@ namespace Cirrious.MvvmCross.Binding.Bindings.Target
             }
         }
 
+<<<<<<< HEAD
         protected override sealed void FireValueChanged(object newValue)
+=======
+        sealed protected override void FireValueChanged(object newValue)
+>>>>>>> upstream/master
         {
             if (_updatingState != UpdatingState.None)
                 return;
